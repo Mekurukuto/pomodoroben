@@ -1,16 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
-  <head>
-    <meta charset="UTF-8">
-    <title>Untitled</title>
-    
-
-  </head>
-    
-  <body>
-  <!DOCTYPE html>
-<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -87,8 +76,6 @@ html[data-view=elegant] #grid .dl{font-style:normal;text-align:center;color:var(
 html[data-view=elegant] #grid button{aspect-ratio:1;padding:0;border:0;position:relative}
 html[data-view=elegant] #grid .today{outline:2px solid var(--acc)}
 html[data-view=elegant] #grid .has::after{content:'';position:absolute;bottom:5px;left:50%;width:5px;height:5px;margin-left:-2.5px;border-radius:50%;background:var(--acc)}
-html[data-view=elegant] .chips2{display:flex;flex-wrap:wrap;gap:6px}
-html[data-view=elegant] .chip.on{background:var(--acc);color:var(--onacc);border-color:var(--acc)}
 html[data-view=elegant] .wrap{position:relative;max-width:360px;margin:12px auto}
 html[data-view=elegant] #overlay{display:none;position:absolute;inset:0;z-index:5;background:var(--ovl);align-items:center;justify-content:center;text-align:center;padding:20px;border-radius:8px}
 html[data-view=elegant] #overlay.show{display:flex}
@@ -175,8 +162,6 @@ html[data-view=minimal] #grid .dl{font-style:normal;text-align:center;color:var(
 html[data-view=minimal] #grid button{aspect-ratio:1;padding:0;border:0;background:var(--bg);position:relative}
 html[data-view=minimal] #grid .today{outline:2px solid var(--blue)}
 html[data-view=minimal] #grid .has::after{content:'';position:absolute;bottom:5px;left:50%;width:5px;height:5px;margin-left:-2.5px;border-radius:50%;background:var(--teal)}
-html[data-view=minimal] .chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
-html[data-view=minimal] .chip.on{background:var(--blue);color:#fff;border-color:var(--blue)}
 html[data-view=minimal] h3{font-size:.8rem;color:var(--mute);margin:12px 0 6px;font-weight:500}
 html[data-view=minimal] .wrap{position:relative;max-width:420px;margin:auto}
 html[data-view=minimal] #overlay{display:none;position:absolute;inset:0;z-index:5;background:#0f1520d9;color:#fff;align-items:center;justify-content:center;text-align:center;padding:20px;border-radius:8px}
@@ -197,7 +182,51 @@ html[data-view=minimal] #toast{position:fixed;bottom:20px;left:50%;transform:tra
 html[data-view=minimal] #toast.show{transform:translate(-50%,0)}
 [hidden]{display:none!important}
 [data-view] .board-b72b1,[data-view] .board-b72b1 *{box-sizing:content-box}
-[hidden]{display:none!important}
+
+/* ===== Toast always on top (also above the floating chess box) ===== */
+html[data-view] #toast{z-index:100}
+
+/* ===== Chess: floating / enlarged box ===== */
+html[data-view] .cbar{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:10px}
+html[data-view] .cbar .mute{margin:0;text-align:left;font-size:.8rem}
+html[data-view] #chessZoom{display:inline-flex;align-items:center;justify-content:center;padding:7px;border-radius:10px;line-height:0}
+html[data-view] #chessZoom svg{width:18px;height:18px;display:block}
+/* keep the piece visible while dragging (it lives on <body>, so it must sit above the panel / floating box) */
+body>img.piece-417db{z-index:99999!important;pointer-events:none!important;opacity:1!important;visibility:visible!important}
+html[data-view] #board{touch-action:none}
+#chessBackdrop{position:fixed;inset:0;background:rgba(0,0,0,.62);backdrop-filter:blur(3px);z-index:59}
+html[data-view] .chessbox.float{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);width:min(96vw,720px);max-height:96vh;overflow-y:auto;z-index:60;background:var(--card);color:var(--ink);border:1px solid var(--line);border-radius:22px;padding:18px;box-shadow:0 30px 80px rgba(0,0,0,.55)}
+html[data-view] .chessbox.float .wrap{max-width:min(92vw,66vh,620px)}
+html[data-view] .chessbox.float #cstatus,html[data-view] .chessbox.float #pmsg{font-size:1.05rem}
+html[data-view] .chessbox.float .cbar .mute{font-size:.9rem}
+
+/* ===== Ambient atmosphere (collapsible sections, multi-sound) ===== */
+html[data-view] .amb{--ax:var(--acc,var(--blue));--axt:var(--onacc,#fff);--sf:var(--surf,var(--bg));margin-top:14px}
+html[data-view] .amb .sec{margin-bottom:10px;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+html[data-view] .amb .ash{display:flex;justify-content:space-between;align-items:center;width:100%;padding:11px 12px;border:0;border-radius:0;background:var(--sf);text-align:left;font-weight:600}
+html[data-view] .amb .badge{font-size:.62rem;padding:2px 8px;border-radius:99px;background:var(--ax);color:var(--axt);margin-left:8px;text-transform:uppercase;letter-spacing:.03em;font-weight:700}
+html[data-view] .amb .arr{transition:transform .2s;color:var(--mute)}
+html[data-view] .amb .sec:not(.open) .arr{transform:rotate(-90deg)}
+html[data-view] .amb .asc{display:none;padding:4px 10px 10px}
+html[data-view] .amb .sec.open .asc{display:block}
+html[data-view] .amb .item{display:flex;align-items:center;justify-content:space-between;gap:10px;width:100%;padding:10px 12px;margin-top:8px;border:1px solid var(--line);border-radius:10px;background:transparent;text-align:left;font-weight:500}
+html[data-view] .amb .item small{display:block;color:var(--mute);font-size:.75rem;font-weight:400}
+html[data-view] .amb .item.on{border-color:var(--ax);background:color-mix(in srgb,var(--ax) 14%,transparent)}
+html[data-view] .amb .item.dis{opacity:.45;cursor:not-allowed}
+html[data-view] .amb .sw{width:42px;height:24px;border-radius:99px;background:var(--line);position:relative;flex-shrink:0;transition:background .2s}
+html[data-view] .amb .sw::after{content:'';position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:#fff;transition:transform .2s;box-shadow:0 1px 3px rgba(0,0,0,.3)}
+html[data-view] .amb .item.on .sw{background:var(--ax)}
+html[data-view] .amb .item.on .sw::after{transform:translateX(18px)}
+html[data-view] .amb .ck{width:22px;height:22px;border-radius:50%;border:2px solid var(--line);display:grid;place-items:center;font-size:.7rem;color:transparent;flex-shrink:0}
+html[data-view] .amb .item.on .ck{background:var(--ax);border-color:var(--ax);color:var(--axt)}
+html[data-view] .amb .warn{margin-top:8px;padding:8px 10px;border:1px solid #f39c12;background:rgba(243,156,18,.12);color:#e0a030;border-radius:10px;font-size:.8rem}
+html[data-view] .amb .freqs{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+html[data-view] .amb .fb{flex:1;min-width:84px;text-align:center;padding:10px 6px;border:1px solid var(--line);border-radius:10px;background:transparent}
+html[data-view] .amb .fb b{display:block}
+html[data-view] .amb .fb small{color:var(--mute);font-size:.7rem}
+html[data-view] .amb .fb.on{background:var(--ax);border-color:var(--ax);color:var(--axt)}
+html[data-view] .amb .fb.on small{color:var(--axt);opacity:.85}
+html[data-view=minimal] .amb .item,html[data-view=minimal] .amb .ash{font-weight:500}
 </style>
 </head>
 <body>
@@ -209,6 +238,8 @@ html[data-view=minimal] #toast.show{transform:translate(-50%,0)}
   <div class="r" style="margin-top:12px"><input id="noteIn" placeholder="Add an entry"><button class="pri" id="addNote">Add</button></div>
 </dialog>
 <div id="toast" role="status"></div>
+
+<!-- ================= ELEGANT VIEW ================= -->
 <template id="t-elegant">
 <header class="top"><div class="brand"><b>Pomodoro Ben</b><div class="views" id="views"><button data-v="elegant">Elegant</button><button data-v="minimal">Minimalist</button></div></div><div class="chips"><span id="streak"></span><span id="lvl"></span><button id="theme" aria-label="Switch light or dark mode">☀</button></div></header>
 
@@ -247,21 +278,21 @@ html[data-view=minimal] #toast.show{transform:translate(-50%,0)}
   </section>
 
   <section class="panel" id="p-sound" hidden><h2 class="ph">Soundscape</h2>
-    <div class="r"><span class="mute">Volume</span><input type="range" id="vol" min="0" max="1" step=".01" value=".5" style="flex:1;padding:0"><button id="stopAll">Stop</button></div>
-    <h3>Noise</h3><div class="chips2" id="gNoise"></div>
-    <h3>Binaural beats (headphones)</h3><div class="chips2" id="gBeat"></div>
-    <h3>Tones</h3><div class="chips2" id="gTone"></div>
+    <div class="r"><span class="mute">Master</span><input type="range" id="vol" min="0" max="1" step=".01" value=".5" style="flex:1;padding:0"><span class="mute" id="volVal">50%</span><button id="stopAll">Stop all</button></div>
+    <div id="ambient" class="amb"></div>
   </section>
 
   <section class="panel" id="p-chess" hidden><h2 class="ph">Chess</h2>
-    <p class="mute" style="margin-bottom:10px">Unlocks while a break timer is running.</p>
-    <div class="r" style="justify-content:center">
-      <select id="cmode"><option value="bot">Play the bot</option><option value="puzzle">Puzzle</option></select>
-      <select id="level"><option value="1">Beginner</option><option value="5" selected>Easy</option><option value="10">Medium</option><option value="15">Hard</option><option value="20">Master</option></select>
-      <button id="newGame">New game</button><button id="undo">Undo</button>
+    <div class="chessbox" id="chessBox">
+      <div class="cbar"><span class="mute" id="chessTime"></span><button id="chessZoom" aria-label="Enlarge chess board" title="Enlarge"></button></div>
+      <div class="r" style="justify-content:center">
+        <select id="cmode"><option value="bot">Play the bot</option><option value="puzzle">Puzzle</option></select>
+        <select id="level"><option value="1">Beginner</option><option value="5" selected>Easy</option><option value="10">Medium</option><option value="15">Hard</option><option value="20">Master</option></select>
+        <button id="newGame">New game</button><button id="undo">Undo</button>
+      </div>
+      <div class="wrap"><div id="board"></div><div id="overlay">Start a break timer to play.</div></div>
+      <div id="cstatus">White to move</div><div id="pmsg"></div><p class="mute" id="think" hidden style="text-align:center">Stockfish is thinking…</p>
     </div>
-    <div class="wrap"><div id="board"></div><div id="overlay">Start a break timer to play.</div></div>
-    <div id="cstatus">White to move</div><div id="pmsg"></div><p class="mute" id="think" hidden style="text-align:center">Stockfish is thinking…</p>
   </section>
 
   <section class="panel" id="p-chat" hidden><h2 class="ph">Chat</h2>
@@ -281,8 +312,9 @@ html[data-view=minimal] #toast.show{transform:translate(-50%,0)}
     <div class="set"><label>Focus<input type="number" id="cw" min="1" max="120"></label><label>Short<input type="number" id="cs" min="1" max="60"></label><label>Long<input type="number" id="cl" min="1" max="60"></label><label>Daily goal<input type="number" id="cg" min="1" max="12"></label></div>
   </section>
 </aside>
-
 </template>
+
+<!-- ================= MINIMAL VIEW ================= -->
 <template id="t-minimal">
 <header>
   <div><h1>Pomodoro Ben</h1><p>Focus, plan, unwind.</p>
@@ -318,22 +350,23 @@ html[data-view=minimal] #toast.show{transform:translate(-50%,0)}
 </section>
 
 <section class="card">
-  <h2>Ambient sound</h2>
-  <div class="row" style="margin-bottom:6px"><span>Volume</span><input type="range" id="vol" min="0" max="1" step=".01" value=".5" style="flex:1"><button id="stopAll">Stop</button></div>
-  <h3>Noise</h3><div class="chips" id="gNoise"></div>
-  <h3>Binaural beats (use headphones)</h3><div class="chips" id="gBeat"></div>
-  <h3>Tones</h3><div class="chips" id="gTone"></div>
+  <h2>Ambient atmosphere</h2>
+  <div class="row"><span>Master</span><input type="range" id="vol" min="0" max="1" step=".01" value=".5" style="flex:1"><span class="mute" id="volVal" style="margin:0">50%</span><button id="stopAll">Stop all</button></div>
+  <div id="ambient" class="amb"></div>
 </section>
 
 <section class="card">
-  <h2>Chess <span class="mute" style="font-weight:400">· unlocks while a break timer runs</span></h2>
-  <div class="row" style="justify-content:center;margin-bottom:12px">
-    <select id="cmode"><option value="bot">Play the bot</option><option value="puzzle">Puzzle</option></select>
-    <select id="level"><option value="1">Beginner</option><option value="5" selected>Easy</option><option value="10">Medium</option><option value="15">Hard</option><option value="20">Master</option></select>
-    <button id="newGame">New game</button><button id="undo">Undo</button>
+  <h2>Chess</h2>
+  <div class="chessbox" id="chessBox">
+    <div class="cbar"><span class="mute" id="chessTime"></span><button id="chessZoom" aria-label="Enlarge chess board" title="Enlarge"></button></div>
+    <div class="row" style="justify-content:center;margin-bottom:12px">
+      <select id="cmode"><option value="bot">Play the bot</option><option value="puzzle">Puzzle</option></select>
+      <select id="level"><option value="1">Beginner</option><option value="5" selected>Easy</option><option value="10">Medium</option><option value="15">Hard</option><option value="20">Master</option></select>
+      <button id="newGame">New game</button><button id="undo">Undo</button>
+    </div>
+    <div class="wrap"><div id="board"></div><div id="overlay">Start a break timer to play.</div></div>
+    <div id="cstatus">White to move</div><div id="pmsg"></div><p class="mute" id="think" hidden>Stockfish is thinking…</p>
   </div>
-  <div class="wrap"><div id="board"></div><div id="overlay">Start a break timer to play.</div></div>
-  <div id="cstatus">White to move</div><div id="pmsg"></div><p class="mute" id="think" hidden>Stockfish is thinking…</p>
 </section>
 
 <section class="card">
@@ -346,10 +379,12 @@ html[data-view=minimal] #toast.show{transform:translate(-50%,0)}
   </div>
 </section>
 </main>
-
 </template>
+
 <script>
-/* ====== YOUR CHESS PUZZLES ====== */
+/* ====== YOUR CHESS PUZZLES ======
+   Add new puzzles just above the "PASTE MORE" line. Each one ends with a comma.
+   The FIRST move in `solution` is played automatically by the opponent, then you play the 2nd, and so on. */
 const MY_PUZZLES=[
 {
     fen: 'r6k/pp2r2p/4Rp1Q/3p4/8/1N1P2R1/PqP2bPP/7K b - - 0 24',
@@ -375,11 +410,6 @@ const MY_PUZZLES=[
     fen: '3b4/3P1k2/2pB4/1p1b2p1/2pK2B1/2P5/P4P2/8 w - - 2 47',
     solution: ['d4e5', 'd8f6', 'e5f5', 'd5e6', 'f5e4', 'e6g4'],
     description: 'Crushing • Deflection • Endgame • Skewer'
-},
-{
-    fen: 'FEN',
-    solution: ['Moves'],
-    description: 'Themes'
 },
 {
     fen: 'r6k/pp2r2p/4Rp1Q/3p4/8/1N1P2R1/PqP2bPP/7K b - - 0 24',
@@ -15373,7 +15403,6 @@ const MY_PUZZLES=[
 },
 ];
 
- 
 const $=id=>document.getElementById(id);
 const ls={get:(k,d)=>{try{return JSON.parse(localStorage.getItem(k))??d}catch{return d}},set:(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch{}}};
 const toast=m=>{const t=$('toast');t.textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500)};
@@ -15381,11 +15410,9 @@ const dayKey=(d=new Date())=>`${d.getFullYear()}-${String(d.getMonth()+1).padSta
 const on=(id,ev,fn)=>{const e=$(id);e&&e.addEventListener(ev,fn)};
 
 /* ---------- Audio core ---------- */
-let ac,mg,nodes=[],cur=null;
+let ac,mg;
 function getAC(){if(!ac){ac=new(window.AudioContext||window.webkitAudioContext)();mg=ac.createGain();mg.gain.value=$('vol').value;mg.connect(ac.destination)}ac.resume();return ac}
 function chime(done){const a=getAC(),t=a.currentTime;(done?[523,659,784,1047]:[880,1760]).forEach((f,i)=>{const o=a.createOscillator(),g=a.createGain(),s=t+i*.15;o.frequency.value=f;o.connect(g);g.connect(a.destination);g.gain.setValueAtTime(0,s);g.gain.linearRampToValueAtTime(.3,s+.03);g.gain.exponentialRampToValueAtTime(.001,s+.5);o.start(s);o.stop(s+.5)})}
-
-
 
 /* ---------- State & hooks ---------- */
 const cfg=Object.assign({work:25,short:5,long:15,goal:4},ls.get('pb_cfg',{}));
@@ -15411,6 +15438,7 @@ function draw(){
   if($('stats'))$('stats').textContent=`Today: ${td.w} focus sessions, ${td.b} breaks`;
   if($('streak'))$('streak').textContent=`${streak()}-day streak`;
   if($('lvl'))$('lvl').textContent=`Level ${level()}`;
+  if($('chessTime'))$('chessTime').textContent=canPlay()?`Break time left · ${t}`:'Unlocks while a break timer is running';
   $('overlay').classList.toggle('show',!canPlay());
 }
 function setMode(m){clearInterval(tick);tick=null;mode=m;left=cfg[m]*60;draw()}
@@ -15479,16 +15507,40 @@ function drawYou(){if(!$('yLv'))return;
     e.style.height=Math.min(100,Math.max(5,w/cfg.goal*100))+'%';e.title=`${dayKey(d)}: ${w}`;if(w>=cfg.goal)e.className='hit';h.append(e)}
 }
 
-/* ---------- Ambient sounds ---------- */
+/* ---------- Ambient atmosphere (several sounds at once) ---------- */
+/* Rules (same as your original version):
+   - Ambient noises: pick ONE
+   - Brainwaves: pick up to 2
+   - Popular frequencies: toggle any, combine freely
+   - Noises and brainwaves can't run together (set NOISE_BRAIN_EXCLUSIVE=false to allow it) */
+const NOISE_BRAIN_EXCLUSIVE=true, MAX_WAVES=2;
+const NOISES=[['brown','Brown Noise'],['deep','Deep Brown Noise'],['pink','Pink Noise'],['white','White Noise']];
+const WAVES=[ /* id, name, range, description, carrier Hz, beat Hz */
+ ['delta','Delta','0.5 – 4 Hz','Deep rest, winding down',100,2],
+ ['theta','Theta','4 – 8 Hz','Meditation, creativity',150,6],
+ ['alpha','Alpha','8 – 14 Hz','Relaxed focus, calm',200,10],
+ ['beta','Beta','14 – 30 Hz','Alert focus, problem solving',250,20],
+ ['gamma','Gamma','30 – 100 Hz','High-engagement focus',300,40]
+];
+const FREQS=[[432,'Harmony'],[528,'Calm'],[40,'Focus']];
+const amb={noise:null,waves:[],freqs:[]};
+const live=new Map();            // key -> array of audio nodes
+const ambOpen={n:true,w:false,f:false};
+const NB={};                     // cached noise buffers
+
 function noise(type){
-  const a=getAC(),n=a.sampleRate*4,b=a.createBuffer(1,n,a.sampleRate),d=b.getChannelData(0);let l=0;const p=[0,0,0,0,0,0,0];
-  for(let i=0;i<n;i++){
-    const w=Math.random()*2-1;
-    if(type==='white')d[i]=w*.5;
-    else if(type==='pink'){p[0]=.99886*p[0]+w*.0555179;p[1]=.99332*p[1]+w*.0750759;p[2]=.969*p[2]+w*.153852;p[3]=.8665*p[3]+w*.3104856;p[4]=.55*p[4]+w*.5329522;p[5]=-.7616*p[5]-w*.016898;d[i]=(p[0]+p[1]+p[2]+p[3]+p[4]+p[5]+p[6]+w*.5362)*.11;p[6]=w*.115926}
-    else{const k=type==='deep'?.008:.02;l=(l+k*w)/(1+k);d[i]=l*(type==='deep'?8:3.5)}
+  const a=getAC();
+  if(!NB[type]){
+    const n=a.sampleRate*4,b=a.createBuffer(1,n,a.sampleRate),d=b.getChannelData(0);let l=0;const p=[0,0,0,0,0,0,0];
+    for(let i=0;i<n;i++){
+      const w=Math.random()*2-1;
+      if(type==='white')d[i]=w*.5;
+      else if(type==='pink'){p[0]=.99886*p[0]+w*.0555179;p[1]=.99332*p[1]+w*.0750759;p[2]=.969*p[2]+w*.153852;p[3]=.8665*p[3]+w*.3104856;p[4]=.55*p[4]+w*.5329522;p[5]=-.7616*p[5]-w*.016898;d[i]=(p[0]+p[1]+p[2]+p[3]+p[4]+p[5]+p[6]+w*.5362)*.11;p[6]=w*.115926}
+      else{const k=type==='deep'?.008:.02;l=(l+k*w)/(1+k);d[i]=l*(type==='deep'?8:3.5)}
+    }
+    NB[type]=b;
   }
-  const s=a.createBufferSource();s.buffer=b;s.loop=true;let o=s;
+  const s=a.createBufferSource();s.buffer=NB[type];s.loop=true;let o=s;
   if(type==='deep'){o=a.createBiquadFilter();o.frequency.value=150;s.connect(o)}
   o.connect(mg);s.start();return[s];
 }
@@ -15498,17 +15550,51 @@ function beat(base,hz){
   m.connect(g);g.connect(mg);return out;
 }
 function tone(f){const a=getAC(),o=a.createOscillator(),g=a.createGain();o.frequency.value=f;g.gain.value=.4;o.connect(g);g.connect(mg);o.start();return[o]}
-const SOUNDS=[
- ['gNoise','brown','Brown',()=>noise('brown')],['gNoise','deep','Deep brown',()=>noise('deep')],['gNoise','pink','Pink',()=>noise('pink')],['gNoise','white','White',()=>noise('white')],
- ['gBeat','delta','Delta 2 Hz',()=>beat(100,2)],['gBeat','theta','Theta 6 Hz',()=>beat(150,6)],['gBeat','alpha','Alpha 10 Hz',()=>beat(200,10)],['gBeat','beta','Beta 20 Hz',()=>beat(250,20)],['gBeat','gamma','Gamma 40 Hz',()=>beat(300,40)],
- ['gTone','f432','432 Hz',()=>tone(432)],['gTone','f528','528 Hz',()=>tone(528)],['gTone','f40','40 Hz',()=>tone(40)]
-];
-function stopAudio(){nodes.forEach(n=>{try{n.stop()}catch{}});nodes=[];cur=null;document.querySelectorAll('.chip.on').forEach(c=>c.classList.remove('on'))}
-function buildChips(){SOUNDS.forEach(([g,id,label,fn])=>{
-  const b=document.createElement('button');b.className='chip';b.textContent=label;
-  b.onclick=()=>{const was=cur;stopAudio();if(was===id)return;nodes=fn();cur=id;b.classList.add('on')};
-  if(cur===id)b.classList.add('on');$(g).append(b);
-});}
+
+function stopKey(k){const ns=live.get(k);if(ns){ns.forEach(n=>{try{n.stop()}catch{}});live.delete(k)}}
+function playKey(k,fn){stopKey(k);live.set(k,fn())}
+function stopAudio(){[...live.keys()].forEach(stopKey);amb.noise=null;amb.waves=[];amb.freqs=[];renderAmb()}
+
+function toggleNoise(id){
+  if(amb.noise===id){stopKey('n:'+id);amb.noise=null;return}
+  if(NOISE_BRAIN_EXCLUSIVE&&amb.waves.length)return toast('Turn off brainwaves to use ambient noises');
+  if(amb.noise)stopKey('n:'+amb.noise);
+  amb.noise=id;playKey('n:'+id,()=>noise(id));
+}
+function toggleWave(id){
+  const i=amb.waves.indexOf(id),w=WAVES.find(x=>x[0]===id);
+  if(i>-1){amb.waves.splice(i,1);stopKey('w:'+id);return}
+  if(NOISE_BRAIN_EXCLUSIVE&&amb.noise)return toast('Turn off ambient noises to use brainwaves');
+  if(amb.waves.length>=MAX_WAVES)return toast(`You can pick up to ${MAX_WAVES} brainwaves`);
+  amb.waves.push(id);playKey('w:'+id,()=>beat(w[4],w[5]));
+}
+function toggleFreq(f){
+  const i=amb.freqs.indexOf(f);
+  if(i>-1){amb.freqs.splice(i,1);stopKey('f:'+f)}
+  else{amb.freqs.push(f);playKey('f:'+f,()=>tone(f))}
+}
+function renderAmb(){
+  const box=$('ambient');if(!box)return;
+  const noiseBlocked=NOISE_BRAIN_EXCLUSIVE&&amb.waves.length>0,waveBlocked=NOISE_BRAIN_EXCLUSIVE&&!!amb.noise;
+  const sec=(k,title,badge,body)=>`<div class="sec${ambOpen[k]?' open':''}"><button class="ash" data-k="s" data-id="${k}"><span>${title}<span class="badge">${badge}</span></span><span class="arr">▾</span></button><div class="asc">${body}</div></div>`;
+  const noiseHtml=(noiseBlocked?'<div class="warn">Turn off brainwaves to use ambient noises.</div>':'')+
+    NOISES.map(([id,l])=>`<button class="item${amb.noise===id?' on':''}${noiseBlocked?' dis':''}" data-k="n" data-id="${id}"><span>${l}</span><span class="sw"></span></button>`).join('');
+  const waveHtml=(waveBlocked?'<div class="warn">Turn off ambient noises to use brainwaves.</div>':'')+
+    WAVES.map(([id,n,r,d])=>{const onn=amb.waves.includes(id),dis=waveBlocked||(!onn&&amb.waves.length>=MAX_WAVES);
+      return `<button class="item${onn?' on':''}${dis?' dis':''}" data-k="w" data-id="${id}"><span><b>${n}</b> · ${r}<small>${d}</small></span><span class="ck">✓</span></button>`}).join('')+
+    '<p class="mute" style="font-size:.72rem;margin-top:8px;text-align:left">Binaural beats work best with headphones.</p>';
+  const freqHtml='<div class="freqs">'+FREQS.map(([f,l])=>`<button class="fb${amb.freqs.includes(f)?' on':''}" data-k="f" data-id="${f}"><b>${f} Hz</b><small>${l}</small></button>`).join('')+'</div>';
+  box.innerHTML=sec('n','☁ Ambient Noises','Pick one',noiseHtml)+sec('w','🧠 Brainwaves','Up to 2',waveHtml)+sec('f','★ Popular Frequencies','Quick select',freqHtml);
+  box.onclick=e=>{
+    const b=e.target.closest('[data-k]');if(!b)return;
+    const {k,id}=b.dataset;
+    if(k==='s')ambOpen[id]=!ambOpen[id];
+    else if(k==='n')toggleNoise(id);
+    else if(k==='w')toggleWave(id);
+    else if(k==='f')toggleFreq(+id);
+    renderAmb();
+  };
+}
 
 /* ---------- Chess ---------- */
 const game=new Chess();let board,bot,thinking=false,cmode='bot',sol=[],pi=0,pc='w',solved=false;
@@ -15576,6 +15662,27 @@ function initChess(){
   board.position(game.fen());if(cmode==='puzzle')board.orientation(pc==='w'?'white':'black');if(!window._rz){window._rz=1;window.addEventListener('resize',()=>board&&board.resize())}
 }
 
+/* ---------- Chess: float / enlarge ---------- */
+let chessFloat=false,chessPh=null;
+const SVG_OPEN='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">';
+const ICON_EXPAND=SVG_OPEN+'<path d="M10 10L4 4M4 9V4h5"/><path d="M14 10l6-6M15 4h5v5"/><path d="M10 14l-6 6M4 15v5h5"/><path d="M14 14l6 6M20 15v5h-5"/></svg>';
+const ICON_SHRINK=SVG_OPEN+'<path d="M4 4l6 6M5 10h5V5"/><path d="M20 4l-6 6M14 5v5h5"/><path d="M4 20l6-6M5 14h5v5"/><path d="M20 20l-6-6M14 19v-5h5"/></svg>';
+function setZoomIcon(){const z=$('chessZoom');if(!z)return;z.innerHTML=chessFloat?ICON_SHRINK:ICON_EXPAND;const t=chessFloat?'Close enlarged board':'Enlarge chess board';z.title=t;z.setAttribute('aria-label',t)}
+function setChessFloat(v){
+  const box=$('chessBox');if(!box||v===chessFloat)return;
+  if(v){
+    chessPh=document.createElement('div');box.replaceWith(chessPh);
+    const bd=document.createElement('div');bd.id='chessBackdrop';bd.onclick=()=>setChessFloat(false);
+    document.body.append(bd,box);box.classList.add('float');
+  }else{
+    box.classList.remove('float');$('chessBackdrop')?.remove();
+    if(chessPh){chessPh.replaceWith(box);chessPh=null}
+  }
+  chessFloat=v;
+  setZoomIcon();
+  setTimeout(()=>board&&board.resize(),60);
+}
+
 /* ---------- Chat (Firebase) ---------- */
 const firebaseConfig={apiKey:"AIzaSyBTV95nlUb0nkH8jRSQFvXTI1tcDGYFuFU",authDomain:"pomodoro-ben.firebaseapp.com",databaseURL:"https://pomodoro-ben-default-rtdb.firebaseio.com",projectId:"pomodoro-ben",storageBucket:"pomodoro-ben.appspot.com",messagingSenderId:"123456789",appId:"1:123456789:web:abcdef123456"};
 let db,uid,nick=ls.get('pb_nick',''),room=null,msgRef=null,roomData={};
@@ -15631,8 +15738,6 @@ function createRoom(){
 }
 function deleteRoom(){if(confirm('Delete this room and all its messages?')){const id=room;leaveRoom();db.ref('rooms/'+id).remove()}}
 
-
-
 /* ---------- Views, panels & wiring ---------- */
 const TITLES={tasks:'Tasks',cal:'Calendar',sound:'Soundscape',chess:'Chess',chat:'Chat',you:'Your progress'};
 let openP=null;
@@ -15658,22 +15763,26 @@ function wire(){
   on('prev','click',()=>{if(--cm<0){cm=11;cy--}drawCal()});on('next','click',()=>{if(++cm>11){cm=0;cy++}drawCal()});
   $('note').value=ls.get('pb_note','');on('note','input',()=>ls.set('pb_note',$('note').value));
   on('saveNote','click',()=>{const v=$('note').value.trim();if(!v)return toast('Write something first');pushNote(dayKey(),v);$('note').value='';ls.set('pb_note','');toast('Saved to today')});
-  $('vol').value=mg?mg.gain.value:.5;on('vol','input',()=>{if(mg)mg.gain.value=$('vol').value});on('stopAll','click',stopAudio);
+  const vol=$('vol'),vv=()=>{$('volVal').textContent=Math.round(vol.value*100)+'%'};
+  vol.value=mg?mg.gain.value:.5;vv();
+  on('vol','input',()=>{if(mg)mg.gain.value=vol.value;vv()});on('stopAll','click',stopAudio);
   $('cmode').value=cmode;$('level').hidden=$('undo').hidden=cmode==='puzzle';$('newGame').textContent=cmode==='puzzle'?'New puzzle':'New game';
   on('cmode','change',e=>{cmode=e.target.value;$('level').hidden=$('undo').hidden=cmode==='puzzle';$('newGame').textContent=cmode==='puzzle'?'New puzzle':'New game';game.reset();board.start();board.orientation('white');$('pmsg').textContent='';status();newGame()});
   on('newGame','click',newGame);
   on('undo','click',()=>{if(canPlay()&&!thinking){game.undo();game.undo();board.position(game.fen());status()}});
+  setZoomIcon();on('chessZoom','click',()=>setChessFloat(!chessFloat));
   on('newRoom','click',createRoom);on('leave','click',leaveRoom);on('delRoom','click',deleteRoom);
   on('send','click',sendMsg);on('msgIn','keydown',e=>e.key==='Enter'&&sendMsg());
   on('theme','click',()=>applyTheme(document.documentElement.dataset.theme==='dark'?'light':'dark'));
 }
 function mount(v){
+  setChessFloat(false);
   if(room)leaveRoom();
   document.documentElement.dataset.view=v;try{localStorage.setItem('pb_view',v)}catch{}
   $('app').replaceChildren($('t-'+v).content.cloneNode(true));
   openP=null;board=null;
   document.querySelectorAll('#views button').forEach(b=>{b.classList.toggle('on',b.dataset.v===v);b.onclick=()=>b.dataset.v!==v&&mount(b.dataset.v)});
-  buildChips();wire();draw();drawTasks();drawCal();quote();applyTheme(document.documentElement.dataset.theme);
+  renderAmb();wire();draw();drawTasks();drawCal();quote();applyTheme(document.documentElement.dataset.theme);
   if(lastSnap)drawRooms(lastSnap);
   if(v==='minimal'){initChess();status();setTimeout(()=>board&&board.resize(),60)}
 }
@@ -15682,15 +15791,11 @@ window.onload=()=>{
   const add=()=>{const v=$('noteIn').value.trim();if(v){pushNote(sel,v);$('noteIn').value='';drawNotes()}};
   on('addNote','click',add);on('noteIn','keydown',e=>e.key==='Enter'&&add());
   document.addEventListener('keydown',e=>{
-    if(e.key==='Escape')closeSheet();
+    if(e.key==='Escape'){if(chessFloat)return setChessFloat(false);closeSheet()}
     if(e.code==='Space'&&!/INPUT|TEXTAREA|SELECT|BUTTON/.test(e.target.tagName)){e.preventDefault();toggleTimer()}
   });
   mount(document.documentElement.dataset.view);initBot();initChat();setInterval(quote,20000);
 };
 </script>
 </body>
-</html>
-    
-  </body>
-  
 </html>
